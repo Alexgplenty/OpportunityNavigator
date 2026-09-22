@@ -3,7 +3,7 @@
 @using OpportunityNavigator.Models
 @using OpportunityNavigator.Services
 
-@inject OpportunityService OpportunityService
+@inject CsvOpportunityService CsvOpportunityService
 
 <h1>Top Sales Oportunities</h1>
 <button class="btn btn-secondary"
@@ -55,6 +55,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        opportunities = await OpportunityService.GetTopOpportunitiesAsync();
+        opportunities = await CsvOpportunityService.GetTopOpportunitiesAsync();
     }
 }

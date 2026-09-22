@@ -1,0 +1,53 @@
+﻿@page "/opportunities"
+
+@using OpportunityNavigator.Models
+@using OpportunityNavigator.Services
+
+@inject OpportunityService OpportunityService
+
+<h1>Top Oportunities</h1>
+
+@if (opportunities == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+   <table class="table">
+
+    <thead>
+        <tr>
+            <th>Account Identifier</th>
+            <th>Intent Score</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var opportunity in opportunities)
+        {
+            <tr>
+                <td>
+                    <a href="/opportunity/@opportunity.AccountIdentifier">
+                        @opportunity.AccountIdentifier
+                    </a>
+                </td>
+
+                <td>
+                    @opportunity.IntentScore
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+}
+
+@code
+{
+    private List<OpportunityProfile>? opportunities;
+
+    protected override async Task OnInitializedAsync()
+    {
+        opportunities = await OpportunityService.GetTopOpportunitiesAsync();
+    }
+}

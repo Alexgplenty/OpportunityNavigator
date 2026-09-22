@@ -1,0 +1,87 @@
+﻿@page "/opportunity/{AccountIdentifier}"
+@rendermode InteractiveServer
+
+@using OpportunityNavigator.Models
+@using OpportunityNavigator.Services
+
+@inject OpportunityService OpportunityService
+@inject OpportunityPromptService PromptService
+@inject OpenAIService OpenAIService
+
+<h1>Opportunity Profile</h1>
+
+@if (opportunity == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h3>@opportunity.AccountIdentifier</h3>
+
+    <p><strong>Intent Score:</strong> @opportunity.IntentScore</p>
+
+    <p><strong>Total Visits:</strong> @opportunity.TotalVisits</p>
+
+    <p><strong>Knowledge Visits:</strong> @opportunity.KnowledgeVisits</p>
+
+    <p><strong>AI Visits:</strong> @opportunity.AIVisits</p>
+
+    <p><strong>Product Visits:</strong> @opportunity.ProductVisits</p>
+
+    <p><strong>Sales Visits:</strong> @opportunity.SalesVisits</p>
+
+    <p><strong>Corporate Visits:</strong> @opportunity.CorporateVisits</p>
+
+    <p><strong>Partner Visits:</strong> @opportunity.PartnerVisits</p>
+
+    <p><strong>Legal Visits:</strong> @opportunity.LegalVisits</p>
+
+    <p><strong>Career Visits:</strong> @opportunity.CareerVisits</p>
+
+    <hr />
+
+    <button class="btn btn-primary"
+            @onclick="GenerateOpportunityBrief">
+        Generate Opportunity Brief
+    </button>
+
+    @if (!string.IsNullOrEmpty(brief))
+    {
+        <hr />
+
+        <h3>Prompt Preview</h3>
+
+        <pre>@brief</pre>
+    }
+}
+@code {
+
+    [Parameter]
+    public string AccountIdentifier { get; set; } = "";
+
+    private OpportunityProfile? opportunity;
+
+    private string brief = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        opportunity =
+            await OpportunityService.GetOpportunityAsync(
+                AccountIdentifier);
+    }
+
+    private async Task GenerateOpportunityBrief()
+    {
+        if (opportunity != null)
+        {
+            var prompt =
+                PromptService.GenerateOpportunityBrief(
+                    opportunity);
+
+            brief =
+                await OpenAIService.GenerateOpportunityBrief(
+                    prompt);
+        }
+    }
+
+}

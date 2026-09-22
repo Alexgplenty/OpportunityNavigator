@@ -1,7 +1,21 @@
 ﻿@page "/"
-
-<h1>Sales Navigator HOME PAGE</h1>
+@inject CsvOpportunityService CsvOpportunityService
+@using OpportunityNavigator.Services
+<h1>Sales Team HOME PAGE</h1>
 
 <a href="/opportunities">
 Opportunity Navigator
 </a>
+
+<p>CSV Rows: @rowCount</p>
+
+@code
+{
+    private int rowCount;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rowCount =
+            await CsvOpportunityService.CountRowsAsync();
+    }
+}

@@ -10,7 +10,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<OpportunityService>();
 builder.Services.AddScoped<OpportunityPromptService>();
 builder.Services.AddScoped<OpenAIService>();
-
+builder.Services.AddScoped<CsvOpportunityService>();
 
 var app = builder.Build();
 

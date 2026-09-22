@@ -6,6 +6,12 @@
 
         public int TotalVisits { get; set; }
 
+        public string? AccountName { get; set; }
+
+        public string? Country { get; set; }
+
+        public string? Industry { get; set; }
+
         public int KnowledgeVisits { get; set; }
 
         public int AIVisits { get; set; }

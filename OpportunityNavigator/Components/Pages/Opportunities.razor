@@ -5,7 +5,11 @@
 
 @inject OpportunityService OpportunityService
 
-<h1>Top Oportunities</h1>
+<h1>Top Sales Oportunities</h1>
+<button class="btn btn-secondary"
+        onclick="history.back()">
+    Back
+</button>
 
 @if (opportunities == null)
 {
@@ -18,7 +22,8 @@ else
     <thead>
         <tr>
             <th>Account Identifier</th>
-            <th>Intent Score</th>
+            <th>Account Name</th>
+            <th>Purchase Intent Score</th>
         </tr>
     </thead>
 
@@ -31,7 +36,9 @@ else
                         @opportunity.AccountIdentifier
                     </a>
                 </td>
-
+                <td>
+                    @opportunity.AccountName
+                </td>
                 <td>
                     @opportunity.IntentScore
                 </td>

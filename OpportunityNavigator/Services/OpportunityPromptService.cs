@@ -20,7 +20,7 @@ namespace OpportunityNavigator.Services
             - Corporate Information activity should be treated as neutral.
             - Career activity may indicate recruitment-related interest rather than buying intent.
 
-            Provide:
+            Provide with paragraph seperators after each section:
 
             1. Opportunity Rating (Low, Medium, High)
             2. Confidence Level (Low, Medium, High)

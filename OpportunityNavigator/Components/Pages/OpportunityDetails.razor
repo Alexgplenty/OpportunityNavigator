@@ -17,41 +17,46 @@
 else
 {
     <h3>@opportunity.AccountIdentifier</h3>
+    <h3>@opportunity.AccountName</h3>
+    <h3>@opportunity.Country</h3>
 
-    <p><strong>Intent Score:</strong> @opportunity.IntentScore</p>
 
-    <p><strong>Total Visits:</strong> @opportunity.TotalVisits</p>
+    <p><strong>Intent Overall Score:</strong> @opportunity.IntentScore</p>
 
-    <p><strong>Knowledge Visits:</strong> @opportunity.KnowledgeVisits</p>
+    <p><strong>Total Site Visits:</strong> @opportunity.TotalVisits</p>
 
-    <p><strong>AI Visits:</strong> @opportunity.AIVisits</p>
+    <p><strong>Knowledge Page Visits:</strong> @opportunity.KnowledgeVisits</p>
 
-    <p><strong>Product Visits:</strong> @opportunity.ProductVisits</p>
+    <p><strong>AI Page Visits:</strong> @opportunity.AIVisits</p>
 
-    <p><strong>Sales Visits:</strong> @opportunity.SalesVisits</p>
+    <p><strong>Product Page Visits:</strong> @opportunity.ProductVisits</p>
 
-    <p><strong>Corporate Visits:</strong> @opportunity.CorporateVisits</p>
+    <p><strong>Sales Page Visits:</strong> @opportunity.SalesVisits</p>
 
-    <p><strong>Partner Visits:</strong> @opportunity.PartnerVisits</p>
+    <p><strong>Corporate Page Visits:</strong> @opportunity.CorporateVisits</p>
 
-    <p><strong>Legal Visits:</strong> @opportunity.LegalVisits</p>
+    <p><strong>Partner Page Visits:</strong> @opportunity.PartnerVisits</p>
 
-    <p><strong>Career Visits:</strong> @opportunity.CareerVisits</p>
+    <p><strong>Legal Page Visits:</strong> @opportunity.LegalVisits</p>
+
+    <p><strong>CareerPage Visits:</strong> @opportunity.CareerVisits</p>
 
     <hr />
 
     <button class="btn btn-primary"
             @onclick="GenerateOpportunityBrief">
-        Generate Opportunity Brief
+        Generate AI Opportunity Brief
     </button>
 
     @if (!string.IsNullOrEmpty(brief))
     {
         <hr />
 
-        <h3>Prompt Preview</h3>
+        <h3>AI Brief</h3>
 
-        <pre>@brief</pre>
+        <div class="border rounded p-3 bg-light">
+        <pre style="white-space: pre-wrap;">@brief</pre>
+        </div>
     }
 }
 @code {

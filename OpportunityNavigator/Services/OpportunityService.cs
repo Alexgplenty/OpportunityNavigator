@@ -42,6 +42,15 @@ public class OpportunityService
                 AccountIdentifier =
                     reader["AccountIdentifier"].ToString() ?? "",
 
+                AccountName=
+                    reader["AccountName"].ToString() ?? "",
+
+                Country=
+                    reader["Country"].ToString() ?? "",
+
+                Industry=
+                    reader["Industry"].ToString() ?? "",
+
                 TotalVisits =
                     Convert.ToInt32(reader["TotalVisits"]),
 

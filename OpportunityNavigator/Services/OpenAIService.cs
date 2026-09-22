@@ -1,32 +1,32 @@
-﻿namespace OpportunityNavigator.Services
+﻿using Azure;
+using Azure.AI.OpenAI;
+
+namespace OpportunityNavigator.Services;
+
+public class OpenAIService
 {
-    public class OpenAIService
+    private readonly IConfiguration _configuration;
+
+    public OpenAIService(IConfiguration configuration)
     {
-        public async Task<string> GenerateOpportunityBrief(string prompt)
-        {
-            await Task.Delay(500);
+        _configuration = configuration;
+    }
 
-            return $@"
-            Opportunity Rating: High
+    public async Task<string> GenerateOpportunityBrief(string prompt)
+    {
+        var endpoint = _configuration["AzureOpenAI:Endpoint"];
+        var apiKey = _configuration["AzureOpenAI:ApiKey"];
+        var deploymentName = _configuration["AzureOpenAI:DeploymentName"];
 
-            Confidence Level: High
+        var client = new AzureOpenAIClient(
+            new Uri(endpoint),
+            new AzureKeyCredential(apiKey));
 
-            Key Areas Of Interest:
-            - Knowledge Management
-            - Artificial Intelligence
-            - Product Evaluation
+        var chatClient = client.GetChatClient(deploymentName);
 
-            Buying Signals:
-            - Strong AI engagement
-            - Significant product evaluation activity
-            - Sales engagement detected
+        var response = await chatClient.CompleteChatAsync(
+            prompt);
 
-            Recommended Sales Action:
-            Arrange a discovery workshop focused on AI-powered knowledge management capabilities.
-
-            Executive Summary:
-            This account demonstrates sustained engagement across knowledge management, AI and product-related content. 
-            Product research and sales engagement activity suggest active solution evaluation and potential buying intent.";
-        }
+        return response.Value.Content[0].Text;
     }
 }

@@ -11,6 +11,7 @@ builder.Services.AddScoped<OpportunityService>();
 builder.Services.AddScoped<OpportunityPromptService>();
 builder.Services.AddScoped<OpenAIService>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

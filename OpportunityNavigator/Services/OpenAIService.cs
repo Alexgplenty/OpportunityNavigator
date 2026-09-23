@@ -13,9 +13,19 @@ public class OpenAIService
     }
     public async Task<string> GenerateOpportunityBrief(string prompt)
     {
-        var test = _configuration["TESTVALUE"];
+        var endpoint = _configuration["AzureOpenAI:Endpoint"];
+        var apiKey = _configuration["AzureOpenAI:ApiKey"];
+        var deploymentName = _configuration["AzureOpenAI:DeploymentName"];
 
-        return $"TESTVALUE={(test ?? "NULL")}";
+        var client = new AzureOpenAIClient(
+            new Uri(endpoint),
+            new AzureKeyCredential(apiKey));
+
+        var chatClient = client.GetChatClient(deploymentName);
+
+        var response = await chatClient.CompleteChatAsync(prompt);
+
+        return response.Value.Content[0].Text;
     }
 
 }

@@ -13,11 +13,9 @@ public class OpenAIService
     }
     public async Task<string> GenerateOpportunityBrief(string prompt)
     {
-        var endpoint = _configuration["AzureOpenAI:Endpoint"];
-        var apiKey = _configuration["AzureOpenAI:ApiKey"];
-        var deploymentName = _configuration["AzureOpenAI:DeploymentName"];
+        var test = _configuration["TESTVALUE"];
 
-        return $"Endpoint={(endpoint ?? "NULL")} | Deployment={(deploymentName ?? "NULL")} | ApiKeyPresent={!string.IsNullOrWhiteSpace(apiKey)}";
+        return $"TESTVALUE={(test ?? "NULL")}";
     }
-    
+
 }

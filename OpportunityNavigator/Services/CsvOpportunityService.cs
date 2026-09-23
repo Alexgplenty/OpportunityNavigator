@@ -62,5 +62,15 @@ namespace OpportunityNavigator.Services
 
             return opportunities;
         }
+
+        public async Task<OpportunityProfile?> GetOpportunityAsync(
+            string accountIdentifier)
+        {
+            var opportunities =
+                await GetTopOpportunitiesAsync();
+
+            return opportunities.FirstOrDefault(o =>
+                o.AccountIdentifier == accountIdentifier);
+        }
     }
 }

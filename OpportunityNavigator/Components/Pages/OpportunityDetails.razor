@@ -4,7 +4,7 @@
 @using OpportunityNavigator.Models
 @using OpportunityNavigator.Services
 
-@inject OpportunityService OpportunityService
+@inject CsvOpportunityService CsvOpportunityService
 @inject OpportunityPromptService PromptService
 @inject OpenAIService OpenAIService
 
@@ -71,10 +71,20 @@ else
     protected override async Task OnInitializedAsync()
     {
         opportunity =
-            await OpportunityService.GetOpportunityAsync(
+            await CsvOpportunityService.GetOpportunityAsync(
                 AccountIdentifier);
     }
 
+    public async Task<OpportunityProfile?> GetOpportunityAsync(
+    string accountIdentifier)
+    {
+        var opportunities =
+            await CsvOpportunityService.GetTopOpportunitiesAsync();
+
+        return opportunities.FirstOrDefault(o =>
+            o.AccountIdentifier == accountIdentifier);
+    }
+    
     private async Task GenerateOpportunityBrief()
     {
         if (opportunity != null)

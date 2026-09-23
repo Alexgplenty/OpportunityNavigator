@@ -37,6 +37,8 @@ Intent score
 Detailed behavioural metrics
 AI Opportunity Briefs
 
+You can search for opportunities by IP address, Company Name, Country or Industry by typing in the search bar. To retrieve all opportunities, delete all text from the search bar.
+
 Using Azure OpenAI, the solution generates natural-language opportunity summaries that:
 
 Interpret behavioural signals

@@ -1,11 +1,12 @@
 ﻿@page "/opportunities"
-
+@rendermode InteractiveServer
 @using OpportunityNavigator.Models
 @using OpportunityNavigator.Services
 
 @inject CsvOpportunityService CsvOpportunityService
 
-<h1>Top Sales Oportunities</h1>
+<h1>Top Sales Opportunities</h1>
+
 <button class="btn btn-secondary"
         onclick="history.back()">
     Back
@@ -17,44 +18,84 @@
 }
 else
 {
-   <table class="table">
+    <div class="mt-3 mb-3">
 
-    <thead>
-        <tr>
-            <th>Account Identifier</th>
-            <th>Account Name</th>
-            <th>Purchase Intent Score</th>
-        </tr>
-    </thead>
+        <input class="form-control"
+               placeholder="Search by account, IP address, country or industry"
+               @bind="searchText"
+               @bind:event="oninput" />
 
-    <tbody>
-        @foreach (var opportunity in opportunities)
-        {
+    </div>
+
+    <p>
+        Showing @FilteredOpportunities.Count() of @opportunities.Count opportunities
+    </p>
+<p>
+    Search Text: @searchText
+</p>
+    <table class="table">
+
+        <thead>
             <tr>
-                <td>
-                    <a href="/opportunity/@opportunity.AccountIdentifier">
+                <th>Account Identifier</th>
+                <th>Account Name</th>
+                <th>Country</th>
+                <th>Industry</th>
+                <th>Purchase Intent Score</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var opportunity in FilteredOpportunities)
+            {
+                <tr>
+                   <td>
+                   <a href="/opportunity/@opportunity.AccountIdentifier">
                         @opportunity.AccountIdentifier
                     </a>
-                </td>
-                <td>
-                    @opportunity.AccountName
-                </td>
-                <td>
-                    @opportunity.IntentScore
-                </td>
-            </tr>
-        }
-    </tbody>
+                    </td>
+                    <td>
+                        @opportunity.AccountName
+                    </td>
 
-</table>
+                    <td>
+                        @opportunity.Country
+                    </td>
+
+                    <td>
+                        @opportunity.Industry
+                    </td>
+
+                    <td>
+                        @opportunity.IntentScore
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
 }
 
 @code
 {
     private List<OpportunityProfile>? opportunities;
 
+    private string searchText = "";
+
+    private IEnumerable<OpportunityProfile> FilteredOpportunities =>
+        opportunities == null
+            ? Enumerable.Empty<OpportunityProfile>()
+            : opportunities.Where(o =>
+                string.IsNullOrWhiteSpace(searchText)
+                || o.AccountIdentifier.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                || o.AccountName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                || o.Country.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                || o.Industry.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+            .OrderByDescending(o => o.IntentScore);
+
     protected override async Task OnInitializedAsync()
     {
-        opportunities = await CsvOpportunityService.GetTopOpportunitiesAsync();
+        opportunities =
+            await CsvOpportunityService.GetTopOpportunitiesAsync();
     }
 }

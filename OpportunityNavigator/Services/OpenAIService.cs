@@ -18,6 +18,15 @@ public class OpenAIService
         var apiKey = _configuration["AzureOpenAI:ApiKey"];
         var deploymentName = _configuration["AzureOpenAI:DeploymentName"];
 
+        if (string.IsNullOrWhiteSpace(endpoint))
+            throw new Exception("Endpoint is null");
+
+        if (string.IsNullOrWhiteSpace(apiKey))
+            throw new Exception("ApiKey is null");
+
+        if (string.IsNullOrWhiteSpace(deploymentName))
+            throw new Exception("DeploymentName is null");
+
         var client = new AzureOpenAIClient(
             new Uri(endpoint),
             new AzureKeyCredential(apiKey));
